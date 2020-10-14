@@ -1,7 +1,6 @@
-<?php include('header.php'); ?>
-<?php include('sidebar.php'); ?>
-
 <?php
+ include('header.php'); 
+ include('sidebar.php'); 
 /**
  * Template File Doc Comment
  * 
@@ -13,38 +12,45 @@
  * @license  https://opensource.org/licenses/MIT MIT License
  * @link     http://localhost/
  */
-include('config.php');
-    $error  = array();
-    $message = '';
+  require 'config.php';
+  $error=array();
+  $id = $_REQUEST["id"];
+  echo $id;
+  $sql = "SELECT * FROM addproduct WHERE id=$id";
+  $result = $conn->query($sql);
+  while ($row = $result->fetch_assoc()) {
+      $name = $row['name'];
+      echo $name;
+      $price = $row['price'];
+      $image = $row['image'];
+      $ldescript = $row['ldescript'];
 
-if (isset($_POST['submit'])) {
+  }
+      if (isset($_POST['submit'])) {
         $name = isset($_POST['name'])?$_POST['name']:'';
-       
-	
+        echo $name;
+        $price = isset($_POST['price'])?$_POST['price']:'';
+		$image = isset($_POST['image'])?$_POST['image']:'';
+		
 		
 
-
-    if (empty($_POST['name'])) {
-        $error[] = array('input'=>'name', 'msg'=>'Please Fill Out all the fields! ');
-	}
-	
-	if (sizeof($error)==0) {
-        $sql = 'INSERT INTO tag (`name`) 
-        VALUES("'.$name.'" )';
-   
+        if (sizeof($error)==0) {
+            $sql="UPDATE addproduct SET `name`='$name', `price`='$price', `image`='$image' WHERE `id`=$id";
         if ($conn->query($sql) === true) {
-             echo "New record created successfully";
+            echo "Record Updated successfully";
+            
         } else {
-            $error[] = array('input'=>'form','msg'=>$conn->error);
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-		
-		
+        echo "Error deleting record: " . $conn->error;
     }
-}
-	?>	
-		
-		<div id="main-content"> <!-- Main Content Section with everything -->
+
+
+        }
+    }
+	$conn->close();
+?>
+
+
+<div id="main-content"> <!-- Main Content Section with everything -->
 			
 			<noscript> <!-- Show a notification if the user has disabled javascript -->
 				<div class="notification error png_bg">
@@ -69,72 +75,65 @@ if (isset($_POST['submit'])) {
 					<h3>Content box</h3>
 					
 					<ul class="content-box-tabs">
-						<li><a href="#tab1" class="default-tab">Manage</a></li> <!-- href must be unique and match the id of target div -->
-						<li><a href="#tab2">Add</a></li>
+						
+						<li><a href="#tab2" class="default-tab">Edit</a></li>
 					</ul>
 					
 					<div class="clear"></div>
 					
 				</div> <!-- End .content-box-header -->
 				
-				<div class="content-box-content">
+				
 					
-					<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
-						
-					<?php  
-                        $sql = 'SELECT * FROM tag';
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                    ?>	
-						
-						<table>
-							
-							<thead>
-								<tr>
-								   
-								   <th>Tag Id</th>
-								   <th>Tag Name</th>
-								   <th>Action</th>
-								</tr>
-								
-							</thead>
+					<div class="tab-content default-tab" id="tab2">
 					
-							<?php
-				while ($row = $result->fetch_assoc()) {
-                    
-        ?>  
-							<tbody>
-								<tr>
-									
-									<td><?php echo $row["id"]; ?></td>
-									<td><?php echo $row["name"]; ?></td>
-									<td>
-										<!-- Icons -->
-										 <a href="edit2.php?id='<?php echo $row["id"];?>'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="delete2.php?id='<?php echo $row["id"];?>'" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-							</tbody>
-							<?php  
-                }    
-        }$conn->close();?> 
-						</table>
-						
-					</div> <!-- End #tab1 -->
+					<form  method = "POST">
 					
-					<div class="tab-content" id="tab2">
-					
-					<form id="Tags Form" action = "tags.php" method = "POST">
-							
 							<fieldset> <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
 								
 							<p>
-									<label>TAGS</label>
-										<input class="text-input small-input" type="text" id="small-input" name="name" /> 
-										<br /><small>Please Enter New Tags</small>
+									<label>Name</label>
+										<input class="text-input small-input" type="text" id="small-input" name="name" value="<?php echo $name?>" /> 
+										<br /><small>Please Product Name</small>
 								</p>
-									<input class="button" type="submit" name="submit" value="Submit" />
+								
+								<p>
+									<label>Price</label>
+                                    <input class="text-input small-input datepicker" type="text" id="small-input" name="price" value="<?php echo $price?>"/>
+                                    <br /><small>Please Product Price</small>
+								</p>
+
+								<p>
+								<label>Image File: </label><br>
+									<input class="text-input medium-input" type="file" name="image" id="medium-input" value="<?php echo $image?>" />
+								</p>
+								
+								<p>
+									<label>Category</label>
+									<select name="category" class="small-input">
+										<option value="Men">Men</option>
+										<option value="Women">Women</option>
+										<option value="Kids">Kids</option>
+										<option value="Electronics">Electronics</option>
+										<option value="Sports">Sports</option>
+									</select> 
+								</p>
+								
+								<p>
+									<label>Tags</label>
+									<input type="checkbox" name="techno[]" value="Fashion"/>Fashion
+									<input type="checkbox" name="techno[]" value="Ecommerce"/> Ecommerce
+									<input type="checkbox" name="techno[]" value="Shop"/>Shop
+									<input type="checkbox" name="techno[]" value="Hand Bags"/>Hand Bags 
+									<input type="checkbox" name="techno[]" value="Laptop"/> Laptop 
+									<input type="checkbox" name="techno[]" value="Headphone"/> Headphone
+								</p>
+								
+								<p>
+									<label>Detail Description</label>
+									<textarea class="text-input textarea wysiwyg" id="textarea" name="ldescript" cols="79" rows="15" avlue="<?php echo $ldescript ?>"></textarea>
+								</p>
+									<input class="button" type="submit" name="submit" value="Update" />
 								</p>
 								
 							</fieldset>
@@ -185,5 +184,5 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>-->
 			
-			<!-- End Notifications --><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<!-- End Notifications -->
 <?php include('footer.php') ?>

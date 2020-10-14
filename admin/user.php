@@ -45,7 +45,8 @@ if (isset($_POST['submit'])) {
                 $error[] = array('input'=>'form','msg'=>$conn->error);
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
-            $conn->close();
+			
+			
         }
     }
 
@@ -128,8 +129,8 @@ if (isset($_POST['submit'])) {
 									<td><?php echo $row["email"];?></td>
 									<td>
 										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
+										 <a href="edit3.php?action=delete&id=<?php echo $row["id"];?>" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
+										 <a href="delete3.php?action=delete&id=<?php echo $row["id"];?>" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
 										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
 									</td>
 								</tr>
@@ -138,7 +139,7 @@ if (isset($_POST['submit'])) {
                             </tbody>
                             <?php  
                 }    
-        }?> 
+        } $conn->close();?> 
 							
 						</table>
 						
@@ -229,5 +230,5 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>-->
 			
-			<!-- End Notifications --><br><br><br><br><br><br><br><br><br><br>
+			<!-- End Notifications --><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <?php include('footer.php') ?>

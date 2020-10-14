@@ -1,6 +1,5 @@
 <?php include('header.php'); ?>
 <?php include('sidebar.php'); ?>
-
 <?php
 /**
  * Template File Doc Comment
@@ -21,17 +20,27 @@ if (isset($_POST['submit'])) {
         $name = isset($_POST['name'])?$_POST['name']:'';
         $price = isset($_POST['price'])?$_POST['price']:'';
 		$image = isset($_POST['image'])?$_POST['image']:'';
-		$sdescript = isset($_POST['sdescript'])?$_POST['sdescript']:'';
+		$category = isset($_POST['category'])?$_POST['category']:'';
+		echo $category;
+		echo $name;
+		$chkbox  = $_POST['techno'];
+		$chkNew = ""; 
+ 
+ 		foreach($chkbox as $chkNew1) 
+ 		{ 
+ 			$chkNew .= $chkNew1 . ","; 
+ 		} 
+ 
         $ldescript = isset($_POST['ldescript'])?$_POST['ldescript']:'';
 
 
     if (empty($_POST['name']) || empty($_POST['image']) || empty($_POST['price'])) {
-        $error[] = array('input'=>'username', 'msg'=>'Please Fill Out all the fields! ');
+        $error[] = array('input'=>'name', 'msg'=>'Please Fill Out all the fields! ');
 	}
 	
 	if (sizeof($error)==0) {
-        $sql = 'INSERT INTO addproduct (`name`, `price`,`image`,`sdescript`,`ldescript`) 
-        VALUES("'.$name.'" , "'.$price.'" , "'.$image.'", "'.$sdescript.'","'.$ldescript.'")';
+        $sql = ' INSERT INTO addproduct (`name`, `price`,`image`,`category`, `tag`,`ldescript`) 
+        VALUES("'.$name.'" , "'.$price.'" , "'.$image.'", "'.$category.'", "'.$chkNew.'", "'.$ldescript.'")';
    
         if ($conn->query($sql) === true) {
              echo "New record created successfully";
@@ -39,7 +48,8 @@ if (isset($_POST['submit'])) {
             $error[] = array('input'=>'form','msg'=>$conn->error);
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-        $conn->close();
+		
+		
     }
 }
 	?>	
@@ -94,8 +104,9 @@ if (isset($_POST['submit'])) {
 								   <th>Product Name</th>
 								   <th>Product Price</th>
 								   <th>Product Image</th>
-								   <th>Product Short Description</th>
-								   <th>Product Detail Description</th>
+								   <th>Product Category</th>
+								   <th>Product Tags</th>
+								   <th>Detail Description</th>
 								   <th>Action</th>
 								</tr>
 								
@@ -113,12 +124,13 @@ if (isset($_POST['submit'])) {
 									<td><?php echo $row["name"]; ?></td>
 									<td><?php echo $row["price"]; ?></td>
 									<td><img src="images/<?php echo $row["image"]; ?>" /></td>
-									<td><?php echo $row["sdescript"]; ?></td>
+									<td><?php echo $row["category"]; ?></td>
+									<td><?php echo $row["tag"]; ?></td>
 									<td><?php echo $row["ldescript"]; ?></td>
 									<td>
 										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
+										 <a href="edit.php?id='<?php echo $row["id"];?>'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
+										 <a href="delete.php?id='<?php echo $row["id"];?>'"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
 										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
 									</td>
 								</tr>
@@ -149,19 +161,44 @@ if (isset($_POST['submit'])) {
 								</p>
 
 								<p>
-								<label>File: </label><br>
+								<label>Image File: </label><br>
 									<input class="text-input medium-input" type="file" name="image" id="medium-input" />
 								</p>
 								
 								<p>
-									<label>Short Description</label>
-									<input class="text-input medium-input" type="text" id="medium-input" name="sdescript" />
+								<label>Category</label>
+									<select name="category" class="small-input">
+								<?php  
+								require 'config.php';
+                        			$sql = 'SELECT * FROM category';
+                        			$result = $conn->query($sql);
+									while ($row = $result->fetch_assoc()) { 
+										?>
+										<option value="<?php echo $row['name']?>"> <?php echo $row['name']?></option>
+										<?php }?>
+									</select> 
 								</p>
 								
 								<p>
-									<label>Long Description</label>
-									<input class="text-input large-input" type="text" id="large-input" name="ldescript" />
-                                </p>
+								<?php  
+                        			$sql = 'SELECT * FROM tag';
+                        			$result = $conn->query($sql);
+                        			if ($result->num_rows > 0) {
+										
+                    				?>
+									<label>Tags</label>
+									<?php while ($row = $result->fetch_assoc()) { ?>
+									<input type="checkbox" name="techno[]" value="<?php echo $row['name']?>"/><?php echo $row['name']?>
+									<?php }?>
+								</p>
+								<?php
+										
+									} 
+								?>
+								<p>
+									<label>Detail Description</label>
+									<textarea class="text-input textarea wysiwyg" id="textarea" name="ldescript" cols="79" rows="15"></textarea>
+								</p>
 									<input class="button" type="submit" name="submit" value="Submit" />
 								</p>
 								
