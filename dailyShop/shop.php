@@ -12,7 +12,8 @@
  */
 require 'config.php';
 session_start();
-require 'header.php';?>
+require 'header.php';
+?>
 <?php
 
 
@@ -28,23 +29,21 @@ if (isset($_POST["add_to_cart"])) {
                      
                      'item_name'  =>  $_POST["hidden_name"],  
                      'item_price'   =>  $_POST["hidden_price"],
-                     'item_image'  =>  $_POST["hidden_image"],
-                       
+                     'item_image'  =>  $_POST["hidden_image"],  
                       
                 );  
                 $_SESSION["shopping_cart"][$count] = $item_array; 
                 echo '<script>alert("Product Added")</script>';  
         } else { 
                echo '<script>alert("Item Already Added")</script>';  
-                echo '<script>window.location="product.php"</script>';  
+                echo '<script>window.location="shop.php"</script>';  
         }  
     } else {  
            $item_array = array(  
                 
                 'item_name'   =>  $_POST["hidden_name"],
                 'item_image'  =>  $_POST["hidden_image"],  
-                'item_price'  =>  $_POST["hidden_price"],
-                  
+                'item_price'  =>  $_POST["hidden_price"],  
                 
            );  
            $_SESSION["shopping_cart"][0] = $item_array;  
@@ -64,10 +63,7 @@ if (isset($_GET["action"])) {
 }
  //session_destroy();
 ?>  
-
-
-  
-  <style> 
+<style> 
         
         /* Styling the button */ 
         .btn { 
@@ -81,6 +77,7 @@ if (isset($_GET["action"])) {
            
         } 
     </style> 
+
 
   <!-- product category -->
   <section id="aa-product-category">
@@ -112,22 +109,21 @@ if (isset($_GET["action"])) {
                 <a id="grid-catg" href="#"><span class="fa fa-th"></span></a>
                 <a id="list-catg" href="#"><span class="fa fa-list"></span></a>
               </div>
-            </div>
-            <div class="aa-product-catg-body">
+            </div><div class="aa-product-catg-body">
               <ul class="aa-product-catg">
               <?php  
-     $sql = "SELECT * FROM addproduct LIMIT 10";
+     $sql = "SELECT * FROM addproduct";
      $result = $conn->query($sql);
-    while ($row = $result->fetch_assoc()) {
-      
-        ?>  
+     while ($row = $result->fetch_assoc()) {
+      if($row["tag"] == "E-Commerce,Shop," || $row["tag"] == "E-Commerce,Shop,Headphone," || $row["tag"] == "E-Commerce,Shop,Laptop," || $row["tag"] == "Fashion,E-Commerce,Shop," || $row["tag"] == "Fashion,Shop,") {
+      ?>  
        
                 <!-- start single product item -->
                 <li>
                 
                   <figure>
                
-                  <form method="post" action="product.php?action=<?php echo $row["id"]; ?>" >
+                  <form method="post" action="shop.php?action=<?php echo $row["id"]; ?>" >
                     <a class="aa-product-img" href="product-detail.php?action=delete&id=<?php echo $row["id"];?>"><img src="images/<?php echo $row["image"]; ?>" style="width:400px;height:300px;"></a>
                     <a class="aa-add-card-btn"><span class="fa fa-shopping-cart"></span><input type="submit"  name='add_to_cart' class="btn" value="Add To Cart"/></a>
                     <figcaption>
@@ -136,18 +132,19 @@ if (isset($_GET["action"])) {
                       <input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" />
                       <input type="hidden" name="hidden_image" value="<?php echo $row["image"]; ?>" />    
                       <input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" />
-                      <input  type="hidden" name="quantity" value="1">
-                      <p class="aa-product-descrip"><?php echo $row["ldescript"]; ?></p>
-                      </figcaption>
+                       
+                      <p class="aa-product-descrip">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam accusamus facere iusto, autem soluta amet sapiente ratione inventore nesciunt a, maxime quasi consectetur, rerum illum.</p>
+                    </figcaption>
                     </form>
                   </figure>                         
                  
                   <!-- product badge -->
                  
                 </li>
-                <?php  
+        <?php  }
         
 }?> <br/>  
+                 
                 
               <!-- quick view modal -->                  
               <div class="modal fade" id="quick-view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -160,32 +157,43 @@ if (isset($_GET["action"])) {
                         <div class="col-md-6 col-sm-6 col-xs-12">                              
                           <div class="aa-product-view-slider">                                
                             <div class="simpleLens-gallery-container" id="demo-1">
-                            <?php  
-                                $sql = "SELECT * FROM addproduct";
-                                $result = $conn->query($sql);
-                                while ($row = $result->fetch_assoc()) {
-                                  
-                                ?>
                               <div class="simpleLens-container">
                                   <div class="simpleLens-big-image-container">
                                       <a class="simpleLens-lens-image" data-lens-image="img/view-slider/large/polo-shirt-1.png">
-                                          <img src="images/<?php echo $row["image"]; ?>" class="simpleLens-big-image">
+                                          <img src="img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
                                       </a>
                                   </div>
-                              </div><?php   } ?>
-                              
+                              </div>
+                              <div class="simpleLens-thumbnails-container">
+                                  <a href="#" class="simpleLens-thumbnail-wrapper"
+                                     data-lens-image="img/view-slider/large/polo-shirt-1.png"
+                                     data-big-image="img/view-slider/medium/polo-shirt-1.png">
+                                      <img src="img/view-slider/thumbnail/polo-shirt-1.png">
+                                  </a>                                    
+                                  <a href="#" class="simpleLens-thumbnail-wrapper"
+                                     data-lens-image="img/view-slider/large/polo-shirt-3.png"
+                                     data-big-image="img/view-slider/medium/polo-shirt-3.png">
+                                      <img src="img/view-slider/thumbnail/polo-shirt-3.png">
+                                  </a>
+
+                                  <a href="#" class="simpleLens-thumbnail-wrapper"
+                                     data-lens-image="img/view-slider/large/polo-shirt-4.png"
+                                     data-big-image="img/view-slider/medium/polo-shirt-4.png">
+                                      <img src="img/view-slider/thumbnail/polo-shirt-4.png">
+                                  </a>
+                              </div>
                             </div>
                           </div>
                         </div>
                         <!-- Modal view content -->
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div class="aa-product-view-content">
-                            <h3><?php echo $row["name"]; ?></h3>
+                            <h3>T-Shirt</h3>
                             <div class="aa-price-block">
-                              <span class="aa-product-view-price"><?php echo $row["price"]; ?></span>
+                              <span class="aa-product-view-price">$34.99</span>
                               <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
                             </div>
-                            <p><?php echo $row["ldescript"]; ?></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis animi, veritatis quae repudiandae quod nulla porro quidem, itaque quis quaerat!</p>
                             <h4>Size</h4>
                             <div class="aa-prod-view-size">
                               <a href="#">S</a>
@@ -205,7 +213,7 @@ if (isset($_GET["action"])) {
                                 </select>
                               </form>
                               <p class="aa-prod-category">
-                                Category: <a href="#"><?php echo $row["category"]; ?></a>
+                                Category: <a href="#">Polo T-Shirt</a>
                               </p>
                             </div>
                             <div class="aa-prod-view-bottom">
@@ -213,7 +221,7 @@ if (isset($_GET["action"])) {
                               <a href="#" class="aa-add-to-cart-btn">View Details</a>
                             </div>
                           </div>
-                                </div>
+                        </div>
                       </div>
                     </div>                        
                   </div><!-- /.modal-content -->
@@ -229,8 +237,8 @@ if (isset($_GET["action"])) {
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li><a href="product.php">1</a></li>
-                  <li><a href="product2.php">2</a></li>
+                  <li><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
                   <li><a href="#">3</a></li>
                   <li><a href="#">4</a></li>
                   <li><a href="#">5</a></li>

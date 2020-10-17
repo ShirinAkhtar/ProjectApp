@@ -4,10 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <title>Daily Shop | Product</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <title>Daily Shop | Cart Page</title>
+    
     <!-- Font awesome -->
     <link href="css/font-awesome.css" rel="stylesheet">
     <!-- Bootstrap -->
@@ -41,9 +39,8 @@
     <![endif]-->
 
   </head>
-  <!-- !Important notice -->
-  <!-- Only for product page body tag have to added .productPage class -->
-  <body class="productPage">  
+  <body>
+   
    <!-- wpf loader Two -->
     <div id="wpf-loader-two">          
       <div class="wpf-loader-two-inner">
@@ -107,7 +104,7 @@
                   <li><a href="account.html">My Account</a></li>
                   <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
                   <li class="hidden-xs"><a href="cart.php">My Cart</a></li>
-                  <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
+                  <li class="hidden-xs"><a href="checkout.php">Checkout</a></li>
                   <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
                 </ul>
               </div>
@@ -298,7 +295,7 @@
                 </ul>
               </li>
               <li><a href="#">Furniture</a></li>            
-             <li><a href="blog-archive.html">Blog <span class="caret"></span></a>
+               <li><a href="blog-archive.html">Blog <span class="caret"></span></a>
                 <ul class="dropdown-menu">                
                   <li><a href="blog-archive.html">Blog Style 1</a></li>
                   <li><a href="blog-archive-2.html">Blog Style 2</a></li>
@@ -321,20 +318,3 @@
     </div>
   </section>
   <!-- / menu -->  
- 
-  <!-- catg header banner section -->
-  <section id="aa-catg-head-banner">
-   <img src="img/logo2.jpg" alt="fashion img" style="max-width:100%; height: 500px;">
-   <div class="aa-catg-head-banner-area">
-     <div class="container">
-      <div class="aa-catg-head-banner-content">
-        <h2>Fashion</h2>
-        <ol class="breadcrumb">
-          <li><a href="index.html">Home</a></li>         
-          <li class="active">Women</li>
-        </ol>
-      </div>
-     </div>
-   </div>
-  </section>
-  <!-- / catg header banner section -->

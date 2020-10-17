@@ -106,6 +106,7 @@ if (isset($_POST['submit'])) {
 								   <th>Product Image</th>
 								   <th>Product Category</th>
 								   <th>Product Tags</th>
+								   <th>Product Color</th>
 								   <th>Detail Description</th>
 								   <th>Action</th>
 								</tr>
@@ -123,9 +124,10 @@ if (isset($_POST['submit'])) {
 									<td><?php echo $row["id"]; ?></td>
 									<td><?php echo $row["name"]; ?></td>
 									<td><?php echo $row["price"]; ?></td>
-									<td><img src="images/<?php echo $row["image"]; ?>" /></td>
+									<td><img src="images/<?php echo $row["image"]; ?>" style="width:200px;height:100px;"/></td>
 									<td><?php echo $row["category"]; ?></td>
 									<td><?php echo $row["tag"]; ?></td>
+									<td><?php echo $row["color"]; ?></td>
 									<td><?php echo $row["ldescript"]; ?></td>
 									<td>
 										<!-- Icons -->
@@ -169,7 +171,7 @@ if (isset($_POST['submit'])) {
 								<label>Category</label>
 									<select name="category" class="small-input">
 								<?php  
-								require 'config.php';
+								
                         			$sql = 'SELECT * FROM category';
                         			$result = $conn->query($sql);
 									while ($row = $result->fetch_assoc()) { 
@@ -178,7 +180,18 @@ if (isset($_POST['submit'])) {
 										<?php }?>
 									</select> 
 								</p>
-								
+								<p>
+								<label>Color</label>
+									<select name="color" class="small-input">
+								<?php 
+                        			$sql = 'SELECT * FROM color';
+                        			$result = $conn->query($sql);
+									while ($row = $result->fetch_assoc()) { 
+										?>
+										<option value="<?php echo $row['name']?>"> <?php echo $row['name']?></option>
+										<?php }?>
+									</select> 
+								</p>
 								<p>
 								<?php  
                         			$sql = 'SELECT * FROM tag';
@@ -191,6 +204,7 @@ if (isset($_POST['submit'])) {
 									<input type="checkbox" name="techno[]" value="<?php echo $row['name']?>"/><?php echo $row['name']?>
 									<?php }?>
 								</p>
+								
 								<?php
 										
 									} 

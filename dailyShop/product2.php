@@ -28,8 +28,7 @@ if (isset($_POST["add_to_cart"])) {
                      
                      'item_name'  =>  $_POST["hidden_name"],  
                      'item_price'   =>  $_POST["hidden_price"],
-                     'item_image'  =>  $_POST["hidden_image"],
-                       
+                     'item_image'  =>  $_POST["hidden_image"],  
                       
                 );  
                 $_SESSION["shopping_cart"][$count] = $item_array; 
@@ -43,8 +42,7 @@ if (isset($_POST["add_to_cart"])) {
                 
                 'item_name'   =>  $_POST["hidden_name"],
                 'item_image'  =>  $_POST["hidden_image"],  
-                'item_price'  =>  $_POST["hidden_price"],
-                  
+                'item_price'  =>  $_POST["hidden_price"],  
                 
            );  
            $_SESSION["shopping_cart"][0] = $item_array;  
@@ -64,24 +62,6 @@ if (isset($_GET["action"])) {
 }
  //session_destroy();
 ?>  
-
-
-  
-  <style> 
-        
-        /* Styling the button */ 
-        .btn { 
-            cursor: pointer; 
-            
-            background-color: transparent; 
-            height: 50px; 
-            width: 200px; 
-            color: #F08080 ; 
-            font-size: 1.5em; 
-           
-        } 
-    </style> 
-
   <!-- product category -->
   <section id="aa-product-category">
     <div class="container">
@@ -116,7 +96,7 @@ if (isset($_GET["action"])) {
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg">
               <?php  
-     $sql = "SELECT * FROM addproduct LIMIT 10";
+     $sql = "SELECT * FROM addproduct LIMIT 10 offset 10";
      $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
       
@@ -129,16 +109,18 @@ if (isset($_GET["action"])) {
                
                   <form method="post" action="product.php?action=<?php echo $row["id"]; ?>" >
                     <a class="aa-product-img" href="product-detail.php?action=delete&id=<?php echo $row["id"];?>"><img src="images/<?php echo $row["image"]; ?>" style="width:400px;height:300px;"></a>
-                    <a class="aa-add-card-btn"><span class="fa fa-shopping-cart"></span><input type="submit"  name='add_to_cart' class="btn" value="Add To Cart"/></a>
+                    <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"><input type="submit"  name='add_to_cart'/></span>Add To Cart</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#"><?php echo $row["name"]; ?></a></h4>
                       <span class="aa-product-price"><a href="#"><?php echo $row["price"]; ?></span><span class="aa-product-price"></span>
                       <input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" />
                       <input type="hidden" name="hidden_image" value="<?php echo $row["image"]; ?>" />    
                       <input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" />
-                      <input  type="hidden" name="quantity" value="1">
-                      <p class="aa-product-descrip"><?php echo $row["ldescript"]; ?></p>
-                      </figcaption>
+                      <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>                            
+                  </div> 
+                      <p class="aa-product-descrip">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam accusamus facere iusto, autem soluta amet sapiente ratione inventore nesciunt a, maxime quasi consectetur, rerum illum.</p>
+                    </figcaption>
                     </form>
                   </figure>                         
                  

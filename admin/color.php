@@ -1,5 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('sidebar.php'); ?>
+
 <?php
 /**
  * Template File Doc Comment
@@ -12,9 +13,36 @@
  * @license  https://opensource.org/licenses/MIT MIT License
  * @link     http://localhost/
  */
-require 'config.php';
+include('config.php');
     $error  = array();
-    $message = '';?>
+    $message = '';
+
+if (isset($_POST['submit'])) {
+        $name = isset($_POST['name'])?$_POST['name']:'';
+       
+	
+		
+
+
+    if (empty($_POST['name'])) {
+        $error[] = array('input'=>'name', 'msg'=>'Please Fill Out all the fields! ');
+	}
+	
+	if (sizeof($error)==0) {
+        $sql = 'INSERT INTO color (`name`) 
+        VALUES("'.$name.'" )';
+   
+        if ($conn->query($sql) === true) {
+             echo "New record created successfully";
+        } else {
+            $error[] = array('input'=>'form','msg'=>$conn->error);
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+		
+		
+    }
+}
+	?>	
 		
 		<div id="main-content"> <!-- Main Content Section with everything -->
 			
@@ -42,7 +70,7 @@ require 'config.php';
 					
 					<ul class="content-box-tabs">
 						<li><a href="#tab1" class="default-tab">Manage</a></li> <!-- href must be unique and match the id of target div -->
-						
+						<li><a href="#tab2">Add</a></li>
 					</ul>
 					
 					<div class="clear"></div>
@@ -52,60 +80,70 @@ require 'config.php';
 				<div class="content-box-content">
 					
 					<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
-					<table>
+						
 					<?php  
-                        $sql = 'SELECT * FROM order_tbl';
+                        $sql = 'SELECT * FROM color';
                         $result = $conn->query($sql);
-                        
+                        if ($result->num_rows > 0) {
                     ?>	
+						
+						<table>
+							
 							<thead>
 								<tr>
-								  
-								   <th>Order Id</th>
-								   <th>User Id</th>
-								   <th>Cart Data</th>
-								   <th>Total</th>
-								   <th>Status</th>
-								   <th>Date & Time</th>
+								   
+								   <th>COLOR Id</th>
+								   <th>COLOR Name</th>
 								   <th>Action</th>
 								</tr>
 								
-							</thead>						 
-							<tbody>
+							</thead>
+					
 							<?php
 				while ($row = $result->fetch_assoc()) {
                     
         ?>  
+							<tbody>
 								<tr>
 									
-								<td><?php echo $row["order_id"]; ?></td>
-									<td><?php echo $row["user_id"];?></td>
-									<td><?php echo $row["cartdata"];?></td>
-									<td><?php echo $row["total"];?></td>
-									<td><?php echo $row["status"];?></td>
-									<td><?php echo $row["date"];?></td>
+									<td><?php echo $row["id"]; ?></td>
+									<td><?php echo $row["name"]; ?></td>
 									<td>
 										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="delete4.php?action=delete&id=<?php echo $row["order_id"];?>" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 
+										 <a href="edit2.php?id='<?php echo $row["id"];?>'" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
+										 <a href="delete2.php?id='<?php echo $row["id"];?>'" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
+										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
 									</td>
 								</tr>
-							
 							</tbody>
 							<?php  
-                
-        } $conn->close();?> 
-							
+                }    
+        }$conn->close();?> 
 						</table>
 						
 					</div> <!-- End #tab1 -->
 					
+					<div class="tab-content" id="tab2">
 					
-					
-						<br><br><br><br><br><br><br><br><br><br><br><br>
+					<form id="Tags Form" action = "color.php" method = "POST">
+							
+							<fieldset> <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
+								
+							<p>
+									<label>COLOR</label>
+										<input class="text-input small-input" type="text" id="small-input" name="name" /> 
+										<br /><small>Please Enter New COLOR</small>
+								</p>
+									<input class="button" type="submit" name="submit" value="Submit" />
+								</p>
+								
+							</fieldset>
+							
+							<div class="clear"></div><!-- End .clear -->
+							
+						</form>
 						
-					      
+					</div> <!-- End #tab2 -->        
 					
 				</div> <!-- End .content-box-content -->
 				
@@ -147,5 +185,5 @@ require 'config.php';
 				</div>
 			</div>-->
 			
-			<!-- End Notifications -->
+			<!-- End Notifications --><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <?php include('footer.php') ?>

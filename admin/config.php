@@ -19,11 +19,11 @@
     $dbname = "project";
 
     // Create connection
-    $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname) or die(mysql_error());
+    $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 
     // Check connection
 if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error) or die(mysql_error());
+        die("Connection failed: " . $conn->connect_error);
 }
 
 

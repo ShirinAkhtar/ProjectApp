@@ -40,7 +40,8 @@
 						<li><a <?php if ($filename == 'products.php') : ?> class="current" <?php endif;?> href="products.php">Manage Products</a></li> <!-- Add class "current" to sub menu items also -->
 						
                         <li><a <?php if ($filename == 'category.php') : ?> class="current" <?php endif;?> href="category.php">Manage Categories</a></li>
-                        <li><a <?php if ($filename == 'tags.php'): ?> class="current" <?php endif;?> href="tags.php">Manage Tags</a></li>
+						<li><a <?php if ($filename == 'tags.php'): ?> class="current" <?php endif;?> href="tags.php">Manage Tags</a></li>
+							<li><a <?php if ($filename == 'color.php'): ?> class="current" <?php endif;?> href="color.php">Manage Color</a></li>
 					</ul>
 				</li>
 				
