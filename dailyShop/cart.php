@@ -125,7 +125,7 @@ if (isset($_GET["action"])) {
                         <input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" />
                         <input type="hidden" name="hidden_image" value="<?php echo $row["image"]; ?>" />    
                         <input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" />  
-                        <td><?php echo number_format( 1* $values["item_price"], 2);?></td>
+                        <td><?php echo number_format( 1 * $values["item_price"], 2);?></td>
                       </tr>
                     <?php $total = $total + (  1* $values["item_price"]); }
                 } ?>

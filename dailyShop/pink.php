@@ -36,7 +36,7 @@ if (isset($_POST["add_to_cart"])) {
                 echo '<script>alert("Product Added")</script>';  
         } else { 
                echo '<script>alert("Item Already Added")</script>';  
-                echo '<script>window.location="pink.php"</script>';  
+                echo '<script>window.location="product.php"</script>';  
         }  
     } else {  
            $item_array = array(  
@@ -132,11 +132,8 @@ if (isset($_GET["action"])) {
                       <input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" />
                       <input type="hidden" name="hidden_image" value="<?php echo $row["image"]; ?>" />    
                       <input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" />
-                      <div class="aa-product-hvr-content">
-                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>                            
-                  </div> 
-                      <p class="aa-product-descrip">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam accusamus facere iusto, autem soluta amet sapiente ratione inventore nesciunt a, maxime quasi consectetur, rerum illum.</p>
-                    </figcaption>
+                     
+                      <p class="aa-product-descrip"><?php echo $row["ldescript"]; ?></p></figcaption>
                     </form>
                   </figure>                         
                  
